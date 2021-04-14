@@ -1,0 +1,21 @@
+dist: bionic
+
+stages:
+  - Bash syntax verification
+  - installation test
+
+shellcheck:
+  stage: Bash syntax verification
+  script:
+  - apt-get update
+  - apt-get install -y shellcheck
+  - shellcheck -e SC2012 install-freefem++.sh
+
+installation:
+   stage: installation test
+   script:
+   - apt update && apt install -y sudo
+   - cp install-freefem++.sh /tmp/
+   - adduser user
+   - echo "user ALL=(root) NOPASSWD:ALL" >> /etc/sudoers
+   - su - user -c "bash /tmp/install-freefem++.sh"
