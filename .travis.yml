@@ -6,16 +6,20 @@ dist: bionic
 
 #shellcheck:
 #  stage: Bash syntax verification
+sudo: required
+
+services: [docker]
+
 script:
-  - apt-get update
-  - apt-get install -y shellcheck
-  - shellcheck -e SC2012 install-freefem++.sh
+  - sudo apt update
+  - sudo apt install -y shellcheck
 
 #installation:
 #   stage: installation test
 #   script:
-  - apt update && apt install -y sudo
+#  - apt update && apt install -y sudo
   - cp install-freefem++.sh /tmp/
-  - adduser user
-  - echo "user ALL=(root) NOPASSWD:ALL" >> /etc/sudoers
-  - su - user -c "bash /tmp/install-freefem++.sh"
+  - bash /tmp/install-freefem++.sh
+#  - adduser user
+#  - echo "user ALL=(root) NOPASSWD:ALL" >> /etc/sudoers
+#  - su - user -c "bash /tmp/install-freefem++.sh"
